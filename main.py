@@ -1,6 +1,8 @@
 import pygame
 from constants import *
 from player import Player
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 
 def main ():
     pygame.init()
@@ -10,7 +12,11 @@ def main ():
     y = SCREEN_HEIGHT/2
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
+    AsteroidField.containers = (updatable)
+    asteroid_field = AsteroidField()
     Player.containers = (updatable, drawable)
+    Asteroid.containers = (asteroids, updatable, drawable)
     player = Player(x, y)
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     while True:
@@ -18,7 +24,7 @@ def main ():
             if event.type == pygame.QUIT:
                return
         dt = clock.tick()/1000
-        clock.tick(60)
+    
         screen.fill((0, 0, 0))
 
         for item in updatable:
